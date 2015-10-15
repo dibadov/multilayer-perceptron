@@ -2,6 +2,52 @@
 #include <time.h>
 
 
+MLayerPerceptron::MLayerPerceptron(int _in, int _out, int _hidden)
+{
+    input = _in;
+    output_num = _out;
+    hidden_neurons = _hidden;
+    
+    //Memory alloc
+    //Input-to-hidden weights layer
+    weights1 = new double*[input];
+    for (int i = 0; i<input; i++)
+        weights1[i] = new double[hidden_neurons];
+    
+    //hidden-to-output weights layer
+    weights2 = new double*[hidden_neurons];
+    for (int i = 0; i<hidden_neurons; i++)
+        weights2[i] = new double[output_num];
+    
+    hidden = new double[hidden_neurons];
+    output = new double[output_num];
+    
+    bias_hidden = new double[hidden_neurons];
+    bias_output = new double[output_num];
+    
+    
+    initWeights();
+    
+}
+
+
+MLayerPerceptron::~MLayerPerceptron(void)
+{
+    for (int i = 0; i<input; i++)
+        delete[] weights1[i];
+    delete[] weights1;
+    
+    for (int i = 0; i<hidden_neurons; i++)
+        delete[] weights2[i];
+    delete[] weights2;
+    
+    delete[] bias_hidden;
+    delete[] bias_output;
+    
+    delete[] hidden;
+    delete[] output;
+}
+
 double MLayerPerceptron::sigmoid(double v)
 {
 	double r = 1/(1+powl(2.7182,-v));
@@ -80,53 +126,7 @@ void MLayerPerceptron::initWeights(void)
 		bias_output[i] = (rand()%1000)/ 1000.0 - 0.5;
 }
 
-MLayerPerceptron::MLayerPerceptron(int _in, int _out, int _hidden)
-{
-	input = _in;
-	output_num = _out;
-	hidden_neurons = _hidden;
-
-	//Memory alloc
-	//Input-to-hidden weights layer
-	weights1 = new double*[input];
-	for (int i = 0; i<input; i++)
-		weights1[i] = new double[hidden_neurons];
-
-	//hidden-to-output weights layer
-	weights2 = new double*[hidden_neurons];
-	for (int i = 0; i<hidden_neurons; i++)
-		weights2[i] = new double[output_num];
-
-	hidden = new double[hidden_neurons];
-	output = new double[output_num];
-
-	bias_hidden = new double[hidden_neurons];
-	bias_output = new double[output_num];
-
-
-	initWeights();
-
-}
-
-
-MLayerPerceptron::~MLayerPerceptron(void)
-{
-	for (int i = 0; i<input; i++)
-		delete[] weights1[i];
-	delete[] weights1;
-
-	for (int i = 0; i<hidden_neurons; i++)
-		delete[] weights2[i];
-	delete[] weights2;
-
-	delete[] bias_hidden;
-	delete[] bias_output;
-
-	delete[] hidden;
-	delete[] output;
-}
-
-double* MLayerPerceptron::Test(int impulse[])
+double* MLayerPerceptron::SendImpulse(int impulse[])
 {
 	for (int j = 0; j<hidden_neurons; j++)
 	{

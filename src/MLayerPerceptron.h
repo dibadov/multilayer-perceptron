@@ -7,12 +7,13 @@ class MLayerPerceptron
 {
 private:
     double sigmoid(double v);
+    
     void initWeights(void);
-protected:	
+    
+protected:
 	int hidden_neurons;
 	int input;
 	int output_num;
-
 
 	double **weights1;
 	double **weights2;
@@ -20,12 +21,15 @@ protected:
 	double *bias_output;
 	double *hidden;
 	double *output;
+    
 public:
     MLayerPerceptron(int _in, int _out, int _hidden);
-    void WriteWeights(char *filename);
-    void LoadWeights(char *filename);
-	double *Test(int impulse[]);
     virtual ~MLayerPerceptron(void);
-
+    
+    void WriteWeights(char *filename);
+    void LoadWeights (char *filename);
+    
+	double *SendImpulse(int impulse[]);
+    
 };
 
