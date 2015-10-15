@@ -8,16 +8,13 @@ MLayerPerceptron::MLayerPerceptron(int _in, int _out, int _hidden)
     output_num = _out;
     hidden_neurons = _hidden;
     
-    //Memory alloc
-    //Input-to-hidden weights layer
-    weights1 = new double*[input];
+    w_input_hidden = new double*[input];
     for (int i = 0; i<input; i++)
-        weights1[i] = new double[hidden_neurons];
+        w_input_hidden[i] = new double[hidden_neurons];
     
-    //hidden-to-output weights layer
-    weights2 = new double*[hidden_neurons];
+    w_hidden_output = new double*[hidden_neurons];
     for (int i = 0; i<hidden_neurons; i++)
-        weights2[i] = new double[output_num];
+        w_hidden_output[i] = new double[output_num];
     
     hidden = new double[hidden_neurons];
     output = new double[output_num];
@@ -34,12 +31,12 @@ MLayerPerceptron::MLayerPerceptron(int _in, int _out, int _hidden)
 MLayerPerceptron::~MLayerPerceptron(void)
 {
     for (int i = 0; i<input; i++)
-        delete[] weights1[i];
-    delete[] weights1;
+        delete[] w_input_hidden[i];
+    delete[] w_input_hidden;
     
     for (int i = 0; i<hidden_neurons; i++)
-        delete[] weights2[i];
-    delete[] weights2;
+        delete[] w_hidden_output[i];
+    delete[] w_hidden_output;
     
     delete[] bias_hidden;
     delete[] bias_output;
@@ -63,7 +60,7 @@ void MLayerPerceptron::LoadWeights(char *filename)
 		for (int j = 0; j<hidden_neurons; j++)
 		{
 			weightfile.getline(temp, 256);
-			weights1[i][j]=strtod(temp,NULL);
+			w_input_hidden[i][j]=strtod(temp,NULL);
 		}	
 
 	for (int i = 0; i<hidden_neurons; i++)
@@ -77,7 +74,7 @@ void MLayerPerceptron::LoadWeights(char *filename)
 		for (int j = 0; j<output_num; j++)
 		{
 			weightfile.getline(temp, 256);
-			weights2[i][j]=strtod(temp,NULL);	 
+			w_input_hidden[i][j]=strtod(temp,NULL);
 		}
 	}
 
@@ -98,14 +95,18 @@ void MLayerPerceptron::WriteWeights(char* filename)
 	{
 		for (int i = 0; i<input; i++)
 			for (int j = 0; j<hidden_neurons; j++)
-				weightfile << weights1[i][j]<<"\n";
+				weightfile << w_input_hidden[i][j]<<"\n";
+        
 		for (int i = 0; i<hidden_neurons; i++)
 			weightfile<<bias_hidden[i]<<"\n";
+        
 		for (int i = 0; i<hidden_neurons; i++)
 			for (int j = 0; j<output_num; j++)
-				weightfile<<weights2[i][j]<<"\n";
+				weightfile<<w_hidden_output[i][j]<<"\n";
+        
 		for (int i = 0; i<output_num; i++)
 			weightfile<<bias_output[i]<<"\n";
+        
 	    weightfile.close();
 	}
 	
@@ -113,15 +114,16 @@ void MLayerPerceptron::WriteWeights(char* filename)
 
 void MLayerPerceptron::initWeights(void)
 {
-	srand (time(NULL));
+	srand (uint(time(NULL)));
+    
 	for (int i = 0; i<input; i++)
 		for (int j = 0; j<hidden_neurons; j++)
-            weights1[i][j] = (rand()%1000)/ 1000.0 - 0.5;
+            w_input_hidden[i][j] = (rand()%1000)/ 1000.0 - 0.5;
 	for (int i = 0; i<hidden_neurons; i++)
 		bias_hidden[i] = (rand()%1000)/ 1000.0 - 0.5;
 	for (int i = 0; i<hidden_neurons; i++)
 		for (int j = 0; j<output_num; j++)
-            weights2[i][j] = (rand()%1000)/ 1000.0 - 0.5;
+            w_hidden_output[i][j] = (rand()%1000)/ 1000.0 - 0.5;
 	for (int i = 0; i<output_num; i++)
 		bias_output[i] = (rand()%1000)/ 1000.0 - 0.5;
 }
@@ -132,7 +134,7 @@ double* MLayerPerceptron::SendImpulse(int impulse[])
 	{
 		hidden[j] = bias_hidden[j];
 		for (int i = 0; i<input;i++)
-			hidden[j]+=impulse[i]*weights1[i][j];
+			hidden[j]+=impulse[i]*w_input_hidden[i][j];
 	}
 
     //Activation function in another loop for debugging purposes
@@ -143,7 +145,7 @@ double* MLayerPerceptron::SendImpulse(int impulse[])
 	{
 		output[j] = bias_output[j];
 		for (int i = 0; i<hidden_neurons; i++)
-			output[j]+=hidden[i]*weights2[i][j];
+			output[j]+=hidden[i]*w_hidden_output[i][j];
 	}
 
 	for (int j = 0; j<output_num; j++)

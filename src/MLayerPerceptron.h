@@ -15,8 +15,10 @@ protected:
 	int input;
 	int output_num;
 
-	double **weights1;
-	double **weights2;
+    // Weight matrices
+	double **w_input_hidden;
+	double **w_hidden_output;
+    
 	double *bias_hidden;
 	double *bias_output;
 	double *hidden;
