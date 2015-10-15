@@ -32,6 +32,7 @@ void MLPTrainable::CalculateUnitErrors(double targetval[])
     //Outer unit error:
 	for (int i = 0; i<output_num; i++)
         outerr[i]= (targetval[i]-output[i])*output[i]*(1-output[i]);
+    //Hardcoded deactivation function. Very bad.
     
     double sum;
     for(int i = 0; i<hidden_neurons; i++)
