@@ -114,7 +114,7 @@ void MLayerPerceptron::WriteWeights(char* filename)
 
 void MLayerPerceptron::initWeights(void)
 {
-	srand (uint(time(NULL)));
+	srand (unsigned int(time(NULL)));
     
 	for (int i = 0; i<input; i++)
 		for (int j = 0; j<hidden_neurons; j++)
@@ -128,7 +128,7 @@ void MLayerPerceptron::initWeights(void)
 		bias_output[i] = (rand()%1000)/ 1000.0 - 0.5;
 }
 
-double* MLayerPerceptron::SendImpulse(int impulse[])
+double* MLayerPerceptron::SendImpulse(double impulse[])
 {
 	for (int j = 0; j<hidden_neurons; j++)
 	{

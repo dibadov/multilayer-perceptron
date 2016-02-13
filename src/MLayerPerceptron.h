@@ -31,7 +31,7 @@ public:
     void WriteWeights(char *filename);
     void LoadWeights (char *filename);
     
-	double *SendImpulse(int impulse[]);
+	double *SendImpulse(double impulse[]);
     
 };
 

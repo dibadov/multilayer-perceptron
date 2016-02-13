@@ -16,7 +16,7 @@ MLPTrainable::~MLPTrainable(void)
     delete[] last_error;
 }
 
-void MLPTrainable::PropagateError(int impulse[], double targetval[])
+void MLPTrainable::PropagateError(double impulse[], double targetval[])
 {
 	SendImpulse(impulse);
 	CalculateUnitErrors(targetval);
@@ -47,7 +47,7 @@ void MLPTrainable::CalculateUnitErrors(double targetval[])
 
 
 
-void MLPTrainable::AdjustWeights(int impulse[])
+void MLPTrainable::AdjustWeights(double impulse[])
 {
 	for(int i = 0; i<hidden_neurons; i++)
 		for (int j = 0; j<output_num; j++)

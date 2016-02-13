@@ -9,14 +9,14 @@ private:
     double *last_error;
     
 	void CalculateUnitErrors(double targetval[]);
-	void AdjustWeights(int impulse[]);
+	void AdjustWeights(double impulse[]);
 
 public:
     
     MLPTrainable(int _in, int _out, int _hidden, double _learning_rate);
     virtual ~MLPTrainable(void);
     
-	void PropagateError(int impulse[], double targetval[]);
+	void PropagateError(double impulse[], double targetval[]);
     
     double* GetLastError(void){return last_error;}
 };
