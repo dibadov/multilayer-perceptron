@@ -1,23 +1,39 @@
 #include "MLayerPerceptron.h"
-class MLPTrainable :
-    public MLayerPerceptron
+
+namespace NN
 {
-private:
-	double learning_rate;
-	double *hiddenerr;
-	double *outerr;
-    double *last_error;
-    
-	void CalculateUnitErrors(double targetval[]);
-	void AdjustWeights(double impulse[]);
 
-public:
-    
-    MLPTrainable(int _in, int _out, int _hidden, double _learning_rate);
-    virtual ~MLPTrainable(void);
-    
-	void PropagateError(double impulse[], double targetval[]);
-    
-    double* GetLastError(void){return last_error;}
-};
+	float SigmoidDeactivation(float v);
+	float LinearDeactivation(float v);
 
+	class MLPTrainable :
+		public MultilayerPerceptron
+	{
+	private:
+		float learning_rate;
+		float *hiddenerr;
+		float *outerr;
+		float *last_error;
+
+		float(*deactivation_hidden)(float) = LinearDeactivation;
+		float(*deactivation_output)(float) = LinearDeactivation;
+
+		void CalculateUnitErrors(float targetval[]);
+		void AdjustWeights(float impulse[]);
+
+		void InitWeights(void);
+
+	public:
+    
+		MLPTrainable(int _in, int _hidden, int _out, float _learning_rate);
+		virtual ~MLPTrainable(void);
+    
+		void PropagateError(float impulse[], float targetval[]);
+    
+		float* GetLastError(void){return last_error;}
+
+		void SetHiddenActivation(ActivationFunction Activation) override;
+		void SetOutputActivation(ActivationFunction Activation) override;
+	};
+
+}

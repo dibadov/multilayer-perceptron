@@ -2,36 +2,62 @@
 #include <stdlib.h>
 #include <fstream>
 
-
-class MLayerPerceptron
+namespace NN
 {
-private:
-    double sigmoid(double v);
-    
-    void initWeights(void);
-    
-protected:
-	int hidden_neurons;
-	int input;
-	int output_num;
 
-    // Weight matrices
-	double **w_input_hidden;
-	double **w_hidden_output;
-    
-	double *bias_hidden;
-	double *bias_output;
-	double *hidden;
-	double *output;
-    
-public:
-    MLayerPerceptron(int _in, int _out, int _hidden);
-    virtual ~MLayerPerceptron(void);
-    
-    void WriteWeights(char *filename);
-    void LoadWeights (char *filename);
-    
-	double *SendImpulse(double impulse[]);
-    
-};
+	float SigmoidActivation(float v);
+	float LinearActivation(float v);
 
+
+	enum ActivationFunction
+	{
+		Linear,
+		Sigmoid
+	};
+
+	class MultilayerPerceptron
+	{
+	private:
+		
+
+		float (*activation_hidden)(float) = LinearActivation;
+		float (*activation_output)(float) = LinearActivation;
+
+	protected:
+		int hidden_neurons;
+		int input;
+		int output_num;
+
+		// Weight matrices
+		float **w_input_hidden;
+		float **w_hidden_output;
+
+		float *bias_hidden;
+		float *hidden_net;
+		float *hidden_z;
+
+		float *bias_output;
+		float *output_net;
+		float *output_z;
+
+		ActivationFunction HiddenActivation = Linear;
+		ActivationFunction OutputActivation = Linear;
+
+	public:
+		MultilayerPerceptron(int _in, int _hidden, int _out);
+		virtual ~MultilayerPerceptron(void);
+
+		void WriteWeights(char *filename);
+		void LoadWeights(char *filename);
+
+		float *SendImpulse(float impulse[]);
+
+		ActivationFunction GetHiddenActivation(void) { return HiddenActivation; }
+		ActivationFunction GetOutputActivation(void) { return OutputActivation; }
+
+		virtual void SetHiddenActivation(ActivationFunction Activation);
+		virtual void SetOutputActivation(ActivationFunction Activation);
+
+	};
+
+}
