@@ -24,18 +24,18 @@ namespace NN
 
 	void MLPTrainable::InitWeights(void)
 	{
-		srand(unsigned int(time(NULL)));
+		srand(uint(time(NULL)));
 
 		for (int i = 0; i<input; i++)
 			for (int j = 0; j<hidden_neurons; j++)
-				w_input_hidden[i][j] = (rand() % 500) / 500.0 - 0.25;
+				w_input_hidden[i][j] = (rand() % 500) / 1000.0 - 0.25;
 		for (int i = 0; i<hidden_neurons; i++)
-			bias_hidden[i] = (rand() % 500) / 500.0 - 0.25;
+			bias_hidden[i] = (rand() % 500) / 1000.0 - 0.25;
 		for (int i = 0; i<hidden_neurons; i++)
 			for (int j = 0; j<output_num; j++)
-				w_hidden_output[i][j] = (rand() % 500) / 500.0 - 0.25;
+				w_hidden_output[i][j] = (rand() % 500) / 1000.0 - 0.25;
 		for (int i = 0; i<output_num; i++)
-			bias_output[i] = (rand() % 500) / 500.0 - 0.25;
+			bias_output[i] = (rand() % 500) / 1000.0 - 0.25;
 	}
 
 	void MLPTrainable::PropagateError(float impulse[], float targetval[])
@@ -114,6 +114,6 @@ namespace NN
 
 	float LinearDeactivation(float v)
 	{
-		return v;
+		return 1;
 	}
 }
