@@ -5,6 +5,7 @@ namespace NN
 
 	float SigmoidDeactivation(float v);
 	float LinearDeactivation(float v);
+	float TanhDeactivation(float v);
 
 	class MLPTrainable :
 		public MultilayerPerceptron

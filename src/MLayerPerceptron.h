@@ -7,12 +7,14 @@ namespace NN
 
 	float SigmoidActivation(float v);
 	float LinearActivation(float v);
+	float TanhActivation(float v);
 
 
 	enum ActivationFunction
 	{
 		Linear,
-		Sigmoid
+		Sigmoid,
+		Tanh
 	};
 
 	class MultilayerPerceptron

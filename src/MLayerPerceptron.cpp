@@ -55,13 +55,13 @@ namespace NN
 			for (int j = 0; j<hidden_neurons; j++)
 			{
 				weightfile.getline(temp, 256);
-				w_input_hidden[i][j]=strtod(temp,NULL);
+				w_input_hidden[i][j]= strtof(temp,NULL);
 			}	
 
 		for (int i = 0; i<hidden_neurons; i++)
 		{
 			weightfile.getline(temp, 256);
-			bias_hidden[i] = strtod(temp,NULL);
+			bias_hidden[i] = strtof(temp,NULL);
 		}
 
 		for (int i = 0; i<hidden_neurons; i++)
@@ -69,14 +69,14 @@ namespace NN
 			for (int j = 0; j<output_num; j++)
 			{
 				weightfile.getline(temp, 256);
-				w_input_hidden[i][j]=strtod(temp,NULL);
+				w_hidden_output[i][j]=strtof(temp,NULL);
 			}
 		}
 
 		for (int i = 0; i<output_num; i++)
 		{
 			weightfile.getline(temp, 256);
-			bias_output[i] = strtod(temp,NULL);
+			bias_output[i] = strtof(temp,NULL);
 		}
 
 		weightfile.close();
@@ -139,6 +139,8 @@ namespace NN
 			activation_hidden = LinearActivation;
 		else if (Activation == ActivationFunction::Sigmoid)
 			activation_hidden = SigmoidActivation;
+		else if (Activation == ActivationFunction::Tanh)
+			activation_hidden = TanhActivation;
 	}
 
 	void MultilayerPerceptron::SetOutputActivation(ActivationFunction Activation)
@@ -148,6 +150,8 @@ namespace NN
 			activation_output = LinearActivation;
 		else if (Activation == ActivationFunction::Sigmoid)
 			activation_output = SigmoidActivation;
+		else if (Activation == ActivationFunction::Tanh)
+			activation_output = TanhActivation;
 	}
 
 
@@ -160,6 +164,11 @@ namespace NN
 	float LinearActivation(float v)
 	{
 		return v;
+	}
+
+	float TanhActivation(float v)
+	{
+		return tanh(v);
 	}
 
 }
