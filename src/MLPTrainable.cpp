@@ -28,10 +28,10 @@ namespace NN
 
 		for (int i = 0; i<input; i++)
 			for (int j = 0; j<hidden_neurons; j++)
-				w_input_hidden[i][j] = (rand() % 100) / 100.0f - 0.5f;
+				w_input_hidden[i][j] = (rand() % 500) / 1000.0f - 0.25f;
 
 		for (int i = 0; i<hidden_neurons; i++)
-			bias_hidden[i] = (rand() % 100) / 100.0f - 0.5f;
+			bias_hidden[i] = (rand() % 500) / 1000.0f - 0.25f;
 
 		for (int i = 0; i<hidden_neurons; i++)
 			for (int j = 0; j<output_num; j++)
