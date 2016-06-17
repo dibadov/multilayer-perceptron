@@ -1,6 +1,8 @@
 #include "MLPTrainable.h"
 #include <time.h>
 #include <iostream>
+
+
 namespace NN
 {
 
@@ -77,19 +79,15 @@ namespace NN
 		for (int i = 0; i < output_num; i++)
 			last_error[i] = targetval[i] - output_z[i];
 
-		//Outer unit error: 
 		for (int i = 0; i < output_num; i++)
 			outerr[i] = (targetval[i] - output_z[i])*deactivation_output(output_net[i]);
 
-		float sum;
 		for (int i = 0; i < hidden_neurons; i++)
 		{
-			//Calculate sum of outer neuron errors multiplied by weights
-			sum = 0;
+			float sum = 0;
 			for (int j = 0; j < output_num; j++)
 				sum += w_hidden_output[i][j] * outerr[j];
 			hiddenerr[i] = deactivation_hidden(hidden_net[i])*sum;
-//			std::cout << hiddenerr[i] << std::endl;
 		}
 	}
 

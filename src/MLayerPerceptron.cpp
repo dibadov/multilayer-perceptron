@@ -114,11 +114,9 @@ namespace NN
 				hidden_net[j]+=impulse[i]*w_input_hidden[i][j];
 		}
 
-		
 		for (int j = 0; j<hidden_neurons; j++)
 			hidden_z[j] = activation_hidden(hidden_net[j]);
 
-	
 		for (int j = 0; j<output_num; j++)
 		{
 			output_net[j] = bias_output[j];
@@ -157,7 +155,7 @@ namespace NN
 
 	float SigmoidActivation(float v)
 	{
-		float r = 1 / (1 + powl(2.7182, -v));
+		float r = 1 / (1 + powl(2.7182f, -v));
 		return r;
 	}
 

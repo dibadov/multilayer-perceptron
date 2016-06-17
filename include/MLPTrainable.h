@@ -10,7 +10,7 @@ namespace NN
 	float LinearDeactivation(float v);
 	float TanhDeactivation(float v);
 
-	class MLPTrainable :
+	class DLL MLPTrainable :
 		public MultilayerPerceptron
 	{
 	private:

@@ -14,14 +14,14 @@ namespace NN
 	float TanhActivation(float v);
 
 
-	enum ActivationFunction
+	enum DLL ActivationFunction
 	{
 		Linear,
 		Sigmoid,
 		Tanh
 	};
 
-	class MultilayerPerceptron
+	class DLL MultilayerPerceptron
 	{
 	private:
 		
